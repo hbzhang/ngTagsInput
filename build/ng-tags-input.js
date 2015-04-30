@@ -5,7 +5,7 @@
  * Copyright (c) 2013-2015 Michael Benford
  * License: MIT
  *
- * Generated at 2015-04-30 17:45:55 -0400
+ * Generated at 2015-04-30 17:48:55 -0400
  */
 (function() {
 'use strict';
@@ -593,7 +593,7 @@ tagsInput.directive('autoComplete', ["$document", "$timeout", "$sce", "$q", "tag
 
         self.load = tiUtil.debounce(function(query, tags) {
             self.query = query;
-            console.log(loadFn());
+            console.log(loadFn);
             var items = tiUtil.makeObjectArray(loadFn({ $query: query }), getTagId());
             items = getDifference(items, tags);
             self.items = items.slice(0, options.maxResultsToShow);
