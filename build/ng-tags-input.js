@@ -5,7 +5,7 @@
  * Copyright (c) 2013-2015 Michael Benford
  * License: MIT
  *
- * Generated at 2015-04-30 17:48:55 -0400
+ * Generated at 2015-04-30 17:50:58 -0400
  */
 (function() {
 'use strict';
@@ -567,7 +567,7 @@ tagsInput.directive('autoComplete', ["$document", "$timeout", "$sce", "$q", "tag
             self.visible = true;
         };
 
-        self.load_source = tiUtil.debounce(function(query, tags) {
+        self.load= tiUtil.debounce(function(query, tags) {
             self.query = query;
 
             var promise = $q.when(loadFn({ $query: query }));
@@ -591,7 +591,7 @@ tagsInput.directive('autoComplete', ["$document", "$timeout", "$sce", "$q", "tag
             });
         }, options.debounceDelay);
 
-        self.load = tiUtil.debounce(function(query, tags) {
+        self.load_data = tiUtil.debounce(function(query, tags) {
             self.query = query;
             console.log(loadFn);
             var items = tiUtil.makeObjectArray(loadFn({ $query: query }), getTagId());
@@ -666,7 +666,7 @@ tagsInput.directive('autoComplete', ["$document", "$timeout", "$sce", "$q", "tag
                 displayProperty: [String, '']
             });
 
-            $scope.suggestionList = new SuggestionList($scope.directdata, $scope.options, $scope.events);
+            $scope.suggestionList = new SuggestionList($scope.source, $scope.options, $scope.events);
 
             this.registerAutocompleteMatch = function() {
                 return {

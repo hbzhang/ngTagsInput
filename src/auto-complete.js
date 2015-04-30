@@ -67,7 +67,7 @@ tagsInput.directive('autoComplete', function($document, $timeout, $sce, $q, tags
             self.visible = true;
         };
 
-        self.load_source = tiUtil.debounce(function(query, tags) {
+        self.load= tiUtil.debounce(function(query, tags) {
             self.query = query;
 
             var promise = $q.when(loadFn({ $query: query }));
@@ -92,7 +92,7 @@ tagsInput.directive('autoComplete', function($document, $timeout, $sce, $q, tags
         }, options.debounceDelay);
 
              
-        self.load = tiUtil.debounce(function(query, tags) {
+        self.load_data = tiUtil.debounce(function(query, tags) {
             self.query = query;
             console.log(loadFn);
             var items = tiUtil.makeObjectArray(loadFn({ $query: query }), getTagId());
@@ -168,7 +168,7 @@ tagsInput.directive('autoComplete', function($document, $timeout, $sce, $q, tags
                 displayProperty: [String, '']
             });
 
-            $scope.suggestionList = new SuggestionList($scope.directdata, $scope.options, $scope.events);
+            $scope.suggestionList = new SuggestionList($scope.source, $scope.options, $scope.events);
 
             this.registerAutocompleteMatch = function() {
                 return {
