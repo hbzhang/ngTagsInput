@@ -132,7 +132,7 @@ tagsInput.directive('autoComplete', function($document, $timeout, $sce, $q, tags
     return {
         restrict: 'E',
         require: '^tagsInput',
-        scope: { source: '&' },
+        scope: { source: '&', data: '&' },
         templateUrl: 'ngTagsInput/auto-complete.html',
         controller: function($scope, $element, $attrs) {
             $scope.events = tiUtil.simplePubSub();
@@ -150,7 +150,7 @@ tagsInput.directive('autoComplete', function($document, $timeout, $sce, $q, tags
                 displayProperty: [String, '']
             });
 
-            $scope.suggestionList = new SuggestionList($scope.source, $scope.options, $scope.events);
+            $scope.suggestionList = new SuggestionList($scope.data, $scope.options, $scope.events);
 
             this.registerAutocompleteMatch = function() {
                 return {
