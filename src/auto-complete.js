@@ -150,7 +150,7 @@ tagsInput.directive('autoComplete', function($document, $timeout, $sce, $q, tags
     return {
         restrict: 'E',
         require: '^tagsInput',
-        scope: { source: '&', directdata: '&' },
+        scope: { source: '&', directdata: '=' },
         templateUrl: 'ngTagsInput/auto-complete.html',
         controller: function($scope, $element, $attrs) {
             $scope.events = tiUtil.simplePubSub();
