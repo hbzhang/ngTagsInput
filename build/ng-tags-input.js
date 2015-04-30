@@ -5,7 +5,7 @@
  * Copyright (c) 2013-2015 Michael Benford
  * License: MIT
  *
- * Generated at 2015-04-30 17:29:39 -0400
+ * Generated at 2015-04-30 17:34:52 -0400
  */
 (function() {
 'use strict';
@@ -648,7 +648,7 @@ tagsInput.directive('autoComplete', ["$document", "$timeout", "$sce", "$q", "tag
     return {
         restrict: 'E',
         require: '^tagsInput',
-        scope: { source: '&', data: '&' },
+        scope: { source: '&', directdata: '&' },
         templateUrl: 'ngTagsInput/auto-complete.html',
         controller: ["$scope", "$element", "$attrs", function($scope, $element, $attrs) {
             $scope.events = tiUtil.simplePubSub();
@@ -666,7 +666,7 @@ tagsInput.directive('autoComplete', ["$document", "$timeout", "$sce", "$q", "tag
                 displayProperty: [String, '']
             });
 
-            $scope.suggestionList = new SuggestionList($scope.data, $scope.options, $scope.events);
+            $scope.suggestionList = new SuggestionList($scope.directdata, $scope.options, $scope.events);
 
             this.registerAutocompleteMatch = function() {
                 return {
