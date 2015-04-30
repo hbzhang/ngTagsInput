@@ -66,7 +66,7 @@ tagsInput.directive('autoComplete', function($document, $timeout, $sce, $q, tags
             }
             self.visible = true;
         };
-        
+
         self.load_source = tiUtil.debounce(function(query, tags) {
             self.query = query;
 
@@ -94,8 +94,8 @@ tagsInput.directive('autoComplete', function($document, $timeout, $sce, $q, tags
              
         self.load = tiUtil.debounce(function(query, tags) {
             self.query = query;
-            console.log(loadFn({ $query: query }));
-            items = tiUtil.makeObjectArray(loadFn({ $query: query }), getTagId());
+            //console.log(loadFn({ $query: query }));
+            var items = tiUtil.makeObjectArray(loadFn({ $query: query }), getTagId());
             items = getDifference(items, tags);
             self.items = items.slice(0, options.maxResultsToShow);
 

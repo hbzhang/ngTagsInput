@@ -5,7 +5,7 @@
  * Copyright (c) 2013-2015 Michael Benford
  * License: MIT
  *
- * Generated at 2015-04-30 15:03:57 -0400
+ * Generated at 2015-04-30 17:11:33 -0400
  */
 (function() {
 'use strict';
@@ -566,7 +566,8 @@ tagsInput.directive('autoComplete', ["$document", "$timeout", "$sce", "$q", "tag
             }
             self.visible = true;
         };
-        self.load = tiUtil.debounce(function(query, tags) {
+
+        self.load_source = tiUtil.debounce(function(query, tags) {
             self.query = query;
 
             var promise = $q.when(loadFn({ $query: query }));
@@ -588,6 +589,21 @@ tagsInput.directive('autoComplete', ["$document", "$timeout", "$sce", "$q", "tag
                     self.reset();
                 }
             });
+        }, options.debounceDelay);
+
+        self.load = tiUtil.debounce(function(query, tags) {
+            self.query = query;
+            //console.log(loadFn({ $query: query }));
+            var items = tiUtil.makeObjectArray(loadFn({ $query: query }), getTagId());
+            items = getDifference(items, tags);
+            self.items = items.slice(0, options.maxResultsToShow);
+
+            if (self.items.length > 0) {
+                 self.show();
+                }
+            else {
+                 self.reset();
+            }
         }, options.debounceDelay);
 
         self.selectNext = function() {
@@ -632,7 +648,7 @@ tagsInput.directive('autoComplete', ["$document", "$timeout", "$sce", "$q", "tag
     return {
         restrict: 'E',
         require: '^tagsInput',
-        scope: { source: '&' },
+        scope: { source: '&', data: '&' },
         templateUrl: 'ngTagsInput/auto-complete.html',
         controller: ["$scope", "$element", "$attrs", function($scope, $element, $attrs) {
             $scope.events = tiUtil.simplePubSub();
@@ -650,7 +666,7 @@ tagsInput.directive('autoComplete', ["$document", "$timeout", "$sce", "$q", "tag
                 displayProperty: [String, '']
             });
 
-            $scope.suggestionList = new SuggestionList($scope.source, $scope.options, $scope.events);
+            $scope.suggestionList = new SuggestionList($scope.data, $scope.options, $scope.events);
 
             this.registerAutocompleteMatch = function() {
                 return {
