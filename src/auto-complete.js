@@ -94,7 +94,7 @@ tagsInput.directive('autoComplete', function($document, $timeout, $sce, $q, tags
              
         self.load = tiUtil.debounce(function(query, tags) {
             self.query = query;
-            console.log(loadFn({ $query: query }));
+            console.log(loadFn());
             var items = tiUtil.makeObjectArray(loadFn({ $query: query }), getTagId());
             items = getDifference(items, tags);
             self.items = items.slice(0, options.maxResultsToShow);
