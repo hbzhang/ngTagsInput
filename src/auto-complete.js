@@ -66,7 +66,8 @@ tagsInput.directive('autoComplete', function($document, $timeout, $sce, $q, tags
             }
             self.visible = true;
         };
-        self.load = tiUtil.debounce(function(query, tags) {
+        
+        self.load_source = tiUtil.debounce(function(query, tags) {
             self.query = query;
 
             var promise = $q.when(loadFn({ $query: query }));
@@ -89,6 +90,23 @@ tagsInput.directive('autoComplete', function($document, $timeout, $sce, $q, tags
                 }
             });
         }, options.debounceDelay);
+
+             
+        self.load = tiUtil.debounce(function(query, tags) {
+            self.query = query;
+            console.log(loadFn({ $query: query }));
+            items = tiUtil.makeObjectArray(loadFn({ $query: query }), getTagId());
+            items = getDifference(items, tags);
+            self.items = items.slice(0, options.maxResultsToShow);
+
+            if (self.items.length > 0) {
+                 self.show();
+                }
+            else {
+                 self.reset();
+            }
+        }, options.debounceDelay);
+
 
         self.selectNext = function() {
             self.select(++self.index);
